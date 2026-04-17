@@ -4,7 +4,7 @@
     "description": "Claude Code skills that route agent work to Tendem's human experts — verification, legal first-pass, and a suspended-coffee ritual."
   },
   "owner": {
-    "name": "Svetlana Grigoryeva",
+    "name": "Svetlana",
     "email": "svtgrig007@gmail.com"
   },
   "plugins": [

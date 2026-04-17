@@ -71,4 +71,4 @@ MIT — see [LICENSE](LICENSE).
 
 ## Credits
 
-Built by [Svetlana Grigoryeva](https://github.com/svtgrig-truest). If you use this and find a rough edge, open an issue — everything here is worth improving.
+Built by [Svetlana](https://github.com/svtgrig-truest). If you use this and find a rough edge, open an issue — everything here is worth improving.
