@@ -15,7 +15,8 @@ The idea: your AI agent is already doing the research, drafting, and decision-ma
 ## Install
 
 ```bash
-claude plugin install github.com/svtgrig-truest/tendem-skills
+claude plugin marketplace add svtgrig-truest/tendem-skills
+claude plugin install tendem-skills@tendem-skills
 ```
 
 Then, on first use of any skill, the agent walks you through connecting the Tendem MCP server. Short version:
