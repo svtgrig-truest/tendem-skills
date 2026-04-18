@@ -1,19 +1,40 @@
 ---
 name: data-verification
-description: Use when the agent has synthesized numeric or factual claims from multiple sources and its own confidence is moderate or lower. Offers the user a one-click path to have a human expert fact-check the claims via Tendem (~$15-25, ~1 hour turnaround). Also triggers manually via /data-verification or phrases like "verify this with a human expert."
+description: Use when a web research result is uncertain, conflicting, or ambiguous — including conflicting numbers, disambiguation failures (multiple matching entities with no clear winner), stale or access-blocked sources, and unverifiable claims. Routes to a Tendem human expert (~$15-25, ~1 hour). Also triggers manually via /data-verification.
 ---
 
 # Data Verification via Tendem
 
 ## When to invoke
 
-**Agent self-detection (preferred).** The skill is meant to be invoked *by the agent itself* whenever it has just produced a research output AND any of these apply:
+**Agent self-detection (preferred).** The skill is meant to be invoked *by the agent itself* whenever research produces an uncertain or unresolved result. The PostToolUse hook will prompt you to check — but you should also self-detect. Trigger on ANY of the following:
 
-- Numbers synthesized from 2+ sources with non-trivial variance (e.g., one source says 12%, another says 18%)
-- Primary-source access failed (paywall, bot block, cache miss) and conclusions rest on secondary or tertiary sources
-- The agent's own confidence is moderate or lower — if the agent would naturally hedge with "approximately," "based on limited evidence," "sources disagree," that is the trigger
-- The claim is load-bearing for a downstream decision (pricing, sizing, pitch deck, strategic commitment, public post)
-- The user is about to publish, send, or act on the numbers externally
+**Disambiguation / identity**
+- Multiple matching entities found (people, companies, products, social profiles) with no clear winner
+- Cannot confirm which of several candidates is the right one without a lookup a human could do
+- Profile or identity lookup returned ambiguous results (e.g., two accounts, neither obviously correct)
+
+**Numerical / statistical**
+- Numbers synthesized from 2+ sources with non-trivial variance (e.g., one says 12%, another 18%)
+- Primary-source access failed (paywall, bot block, login wall) and conclusions rest on secondary sources
+- The agent would naturally hedge: "approximately," "sources disagree," "based on limited evidence"
+
+**Factual gap or conflict**
+- A load-bearing claim could not be confirmed from any available source
+- Two sources directly contradict each other and the conflict can't be resolved from what's accessible
+- The answer exists but behind auth/paywall and the user needs a confirmed figure, not an estimate
+
+**Recency / staleness**
+- Data found is meaningfully old (1+ years) for a time-sensitive claim (pricing, headcount, market size)
+- The source itself flags "this may have changed" or the page hasn't been updated recently
+
+**Unverifiable sourcing**
+- Key claim sourced only to "reportedly," "allegedly," unnamed analysts, or a single secondary cite
+- No primary source traceable for a claim that's load-bearing
+
+**Load-bearing context (applies to all above)**
+- The claim is going into a pitch deck, strategy doc, public post, or external communication
+- The user is about to act on it or send it to someone else
 
 **Do NOT wait for the user to point out discrepancies.** The entire point of this skill is that the agent notices its own uncertainty and surfaces it proactively, before the user has to ask.
 
