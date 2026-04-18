@@ -32,7 +32,7 @@ Before the main flow, check `~/.claude/plugins/tendem-skills/state.json` for `te
    ```
    1. Sign up at https://tendem.ai (free, ~30 sec)
       → You'll get free credits on signup — enough to try a verification task
-   2. Grab your API key from Settings → API
+   2. Get your API key: Connect to AI → Tokens in the sidebar, or https://agent.tendem.ai/tokens
    3. Run: claude mcp add tendem --url https://mcp.tendem.ai --header "Authorization: Bearer YOUR_KEY"
    4. Restart your Claude Code session and re-run the command
    ```
