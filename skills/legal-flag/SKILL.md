@@ -78,9 +78,13 @@ Ask for explicit approval. On "yes", call `mcp__tendem__approve_task`.
 
 ### Step 5 — scheduled result check
 
-Use `ScheduleWakeup` with `delaySeconds: 3600` (60 minutes for legal — slightly longer than the general default). Reason: "checking Tendem legal task for user — call get_task_result and deliver structured review."
+Immediately after approval, tell the user: "I'll check back in about two hours and show you the lawyer's findings." Then go quiet.
 
-If result is not ready on first check, reschedule once more for 30 minutes later. Do not loop indefinitely.
+Schedule ONE durable check via `mcp__scheduled-tasks__create_scheduled_task` (NOT `ScheduleWakeup` — capped at 1 hour and session-bound). Fire time: **90-120 minutes out** for legal tasks.
+
+Scheduled task payload: "Check Tendem legal task `<task_id>` via `mcp__tendem__get_task`. If COMPLETED, fetch the result via `mcp__tendem__get_task_result` and deliver the structured review to the user. If still in progress, reschedule once for +45 minutes. If failed, tell the user plainly."
+
+One reschedule max. Only re-enter the conversation when there is a result to show.
 
 ### Step 6 — deliver
 
@@ -114,4 +118,4 @@ State this limitation upfront if the user's question drifts into these areas.
 - `mcp__tendem__get_task`
 - `mcp__tendem__approve_task`
 - `mcp__tendem__get_task_result`
-- `ScheduleWakeup` for the delayed result check
+- `mcp__scheduled-tasks__create_scheduled_task` for the delayed result check (durable, survives session end)
