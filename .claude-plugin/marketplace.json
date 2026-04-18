@@ -1,7 +1,7 @@
 {
   "name": "tendem-skills",
   "metadata": {
-    "description": "Claude Code skills that route agent work to Tendem's human experts — verification, legal first-pass, and a suspended-coffee ritual."
+    "description": "Draft Claude Code skills routing agent work to Tendem's human experts — work-in-progress, not publicly installable. Validated skills are lifted out to their own repos."
   },
   "owner": {
     "name": "Svetlana",
@@ -11,7 +11,7 @@
     {
       "name": "tendem-skills",
       "source": "./",
-      "description": "Three Claude Code skills that route agent work to Tendem's human experts: data verification, legal flag, and suspended coffee."
+      "description": "Draft utility skills (data-verification, legal-flag) — untested; do not install yet. For the live suspended-coffee ritual see https://github.com/svtgrig-truest/suspended-coffee."
     }
   ]
 }

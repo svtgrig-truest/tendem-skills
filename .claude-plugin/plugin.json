@@ -1,7 +1,7 @@
 {
   "name": "tendem-skills",
-  "version": "0.1.1",
-  "description": "Three Claude Code skills that route work to Tendem's human experts: data verification, legal flag, and suspended coffee.",
+  "version": "0.2.0-wip",
+  "description": "Draft Claude Code skills that route agent work to Tendem's human experts. Not yet publicly installable — individual skills are lifted into their own repos once validated (see suspended-coffee).",
   "author": {
     "name": "Svetlana",
     "email": "svtgrig007@gmail.com"
@@ -9,5 +9,5 @@
   "license": "MIT",
   "homepage": "https://github.com/svtgrig-truest/tendem-skills",
   "repository": "https://github.com/svtgrig-truest/tendem-skills",
-  "keywords": ["tendem", "toloka", "mcp", "human-in-the-loop", "research", "verification"]
+  "keywords": ["tendem", "toloka", "mcp", "human-in-the-loop", "wip"]
 }
