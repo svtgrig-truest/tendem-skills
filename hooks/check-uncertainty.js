@@ -183,12 +183,13 @@ function detectUncertainty(text) {
 function emitNudge() {
   const nudge =
     "[data-verification check] The web research tool returned uncertain, conflicting, or ambiguous results. " +
-    "Before finalising your response, ask yourself: " +
-    "(1) Are there multiple entities that could match the query with no clear winner? " +
-    "(2) Do numeric claims vary across sources or rely on paywalled primaries? " +
-    "(3) Is there a factual gap that changes the answer? " +
-    "If yes to any of these — AND the answer is load-bearing for the user's task — " +
-    "invoke the data-verification skill (tendem-skills:data-verification) to route it to a human expert. " +
+    "Before finalising your response, check: " +
+    "(1) Multiple entities match with no clear winner? " +
+    "(2) Numbers vary across sources or primary source is blocked? " +
+    "(3) Can't confirm a key claim? " +
+    "If yes to any of these — invoke the data-verification skill (tendem-skills:data-verification). " +
+    "Present what you found, then offer Tendem routing in the same message. " +
+    "If the user says they don't have clarifying context, that is an escalation signal — route to Tendem immediately. " +
     "Do not silently pick one option or present uncertain data as confirmed.";
 
   const out = {
