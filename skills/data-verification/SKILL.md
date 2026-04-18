@@ -1,6 +1,6 @@
 ---
 name: data-verification
-description: Use when a web research result is uncertain, conflicting, or ambiguous — including conflicting numbers, disambiguation failures (multiple matching entities with no clear winner), stale or access-blocked sources, and unverifiable claims. Routes to a Tendem human expert (~$15-25, ~1 hour). Also triggers manually via /data-verification.
+description: Invoke ONLY after you have already done your own web research and encountered uncertainty — conflicting numbers, disambiguation failure (multiple matching entities, no clear winner), paywalled primaries, stale data, or unverifiable claims. Never invoke before searching. Do the research first; this skill routes the unresolved remainder to a Tendem human expert (~$15-25, ~1 hr). Manual override via /data-verification.
 ---
 
 # Data Verification via Tendem
@@ -77,23 +77,35 @@ On subsequent invocations, skip onboarding and go straight to the main flow.
 
 **Critical: the path depends on how the skill was invoked.**
 
+**Global guardrail — do NOT load this skill pre-emptively.** This skill must never be loaded at the start of a research task as a precaution. Always do your own research first. Only after you have searched and hit an uncertainty signal should you engage this skill's flow.
+
 ### Path A — manual invocation (`/data-verification` or explicit user request)
 
-The user has already decided a claim needs a human. **Do NOT do your own research first.** The moment you do a web search and produce your own answer, you undermine the entire point — the user gets a "good enough" LLM answer and Tendem becomes an optional upgrade no one clicks.
+**Path A applies ONLY when the user explicitly typed `/data-verification` or said "verify this with a human expert."** If you loaded this skill because of a PostToolUse hook nudge or proactively — that is Path B, not Path A.
 
-Instead, go directly to Step 2 (compose the brief). Take the claim as given. Your job here is to be a routing layer, not the researcher.
+When Path A applies: the user has already decided a claim needs a human. **Do NOT do your own research first.** Go directly to Step 2 (compose the brief). Take the claim as given. Your job here is routing, not research.
 
 ### Path B — agent self-detection (auto-trigger)
 
-You just produced a research output and noticed one of the uncertainty signals from "When to invoke." You have already done research — do NOT do more. Surface what you found uncertain and offer routing:
+You just finished your own research and hit a dead end — one of the uncertainty signals from "When to invoke" applies. **The exact trigger moment is when you would naturally end your response with something like:**
 
-- The specific claim(s) that landed on soft ground
-- Which sources you drew from and where they disagreed or were blocked
-- Why it matters (pitch deck, strategy doc, public post)
+- "I found two accounts and can't determine which one is correct"
+- "Sources disagree and I can't reconcile them"
+- "I can't confirm this without additional context"
+- "This information may be outdated"
+- "Access was blocked / paywall"
+
+**Do not stop there.** Instead of delivering a hedged non-answer, surface what you found AND offer routing:
+
+- The specific claim(s) or entities that landed on soft ground
+- What you found (both candidates, conflicting numbers, blocked sources, etc.)
+- Why a human can resolve it when you couldn't
 
 Example framing (generate fresh, do not copy verbatim):
 
-> "I put together the numbers, but a few of them are on softer ground than I'd like. Specifically: the LTV figure for fintech SaaS varies from $8k to $31k across the three sources I could read, and the primary McKinsey report is paywalled. If you're planning to use this in a pitch or send it anywhere external, a Tendem expert can verify it in about an hour for $15-25. Want me to set that up?"
+> "I found two X accounts matching Jessica Fain — @Jessica_Fain (33 followers, 23 posts) and @JessFain (52 followers, 7 posts) — both registered February 2012, both inactive. Without additional context I can't determine which one is the right profile. A Tendem expert can check in about an hour for $15-25 — want me to set that up?"
+
+> "I put together the numbers, but a few are on softer ground than I'd like. The LTV figure for fintech SaaS varies from $8k to $31k across the three sources I could read, and the primary McKinsey report is paywalled. If you're planning to use this in a pitch or send it anywhere external, a Tendem expert can verify it in about an hour for $15-25. Want me to set that up?"
 
 If the user says yes, continue to Step 2. If no, stop.
 
