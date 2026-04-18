@@ -44,17 +44,27 @@ On subsequent invocations, skip onboarding and go straight to the main flow.
 
 ## Main flow
 
-### Step 1 — surface the uncertainty
+**Critical: the path depends on how the skill was invoked.**
 
-Before finalizing the research output, stop and present to the user:
+### Path A — manual invocation (`/data-verification` or explicit user request)
 
-- The specific claim(s) you are unsure about
+The user has already decided a claim needs a human. **Do NOT do your own research first.** The moment you do a web search and produce your own answer, you undermine the entire point — the user gets a "good enough" LLM answer and Tendem becomes an optional upgrade no one clicks.
+
+Instead, go directly to Step 2 (compose the brief). Take the claim as given. Your job here is to be a routing layer, not the researcher.
+
+### Path B — agent self-detection (auto-trigger)
+
+You just produced a research output and noticed one of the uncertainty signals from "When to invoke." You have already done research — do NOT do more. Surface what you found uncertain and offer routing:
+
+- The specific claim(s) that landed on soft ground
 - Which sources you drew from and where they disagreed or were blocked
-- Why this matters (what decision or content depends on it)
+- Why it matters (pitch deck, strategy doc, public post)
 
 Example framing (generate fresh, do not copy verbatim):
 
 > "I put together the numbers, but a few of them are on softer ground than I'd like. Specifically: the LTV figure for fintech SaaS varies from $8k to $31k across the three sources I could read, and the primary McKinsey report is paywalled. If you're planning to use this in a pitch or send it anywhere external, a Tendem expert can verify it in about an hour for $15-25. Want me to set that up?"
+
+If the user says yes, continue to Step 2. If no, stop.
 
 ### Step 2 — compose the task brief
 
@@ -80,11 +90,15 @@ Once the task is in `AWAITING_APPROVAL`, show the user:
 
 Ask for explicit approval. On "yes", call `mcp__tendem__approve_task`.
 
-### Step 5 — scheduled result check
+### Step 5 — deferred result check
 
-Use `ScheduleWakeup` with `delaySeconds: 2700` (45 minutes) to check back once. The reason/prompt should be specific: "checking Tendem task for user's verification — call get_task_result and deliver to user."
+Immediately after approval, tell the user: "I'll check back in about an hour and show you what the expert found." Then go quiet.
 
-When the wake-up fires, call `mcp__tendem__get_task_result`. If the task is complete, present the result to the user side-by-side with the original claims, highlighting what changed. If still in progress, schedule one more check in 20 minutes.
+Schedule ONE durable check via `mcp__scheduled-tasks__create_scheduled_task` (NOT `ScheduleWakeup` — capped at 1 hour and session-bound). Fire time: **60-90 minutes out** for verification tasks.
+
+Scheduled task payload: "Check Tendem verification task `<task_id>` via `mcp__tendem__get_task`. If COMPLETED, fetch the result and deliver to the user side-by-side with the original claims. If still in progress, reschedule once for +45 minutes. If failed, tell the user plainly."
+
+Only re-enter the conversation when there is a result to show. One reschedule max.
 
 ### Step 6 — deliver
 
@@ -115,4 +129,4 @@ When the result arrives:
 - `mcp__tendem__get_task`
 - `mcp__tendem__approve_task`
 - `mcp__tendem__get_task_result`
-- `ScheduleWakeup` for the delayed result check
+- `mcp__scheduled-tasks__create_scheduled_task` for the deferred result check (preferred over `ScheduleWakeup`)
