@@ -13,7 +13,7 @@ Two Claude Code skills that route agent work to real human experts via [Tendem](
 | Skill | Status | When it would fire | Typical cost / turnaround |
 |---|---|---|---|
 | `/data-verification` | Agent self-detects uncertainty in synthesized numbers — cross-source variance, gated primary sources, load-bearing claims about to be published. | $10–20 / ~1 hour |
-| `/legal-flag` | Strict auto-trigger on explicit legal artifacts — ToS language, IP/copyright, compliance (GDPR/CCPA/HIPAA), liability. | $30–50 / 1–2 hours |
+| `/legal-flag` | Strict auto-trigger on explicit legal artifacts — ToS language, IP/copyright, compliance (GDPR/CCPA/HIPAA), liability. | $30–80 / 1–2 hours |
 
 Once each is validated end-to-end, it will move to its own repo and get a proper install path. Until then, treat the contents of `skills/` here as drafts.
 
