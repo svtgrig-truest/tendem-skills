@@ -41,50 +41,52 @@ Before the main flow, check `~/.claude/plugins/tendem-skills/state.json` for `te
 
 ## Main flow
 
-**CRITICAL guardrail — read before anything else.**
+**Flow principle.** Draft first, verify after. If the user needs a ToS, privacy policy, or answers to legal questions — write them. Provide real value immediately. Then, at the natural end of your response, offer Tendem review of what you just produced. The expert's job is to verify and improve the AI draft, not to replace it.
 
-Do NOT answer legal questions yourself. Do not draft ToS clauses, privacy policies, or legal language. Do not provide legal analysis or cite statutes as if giving legal advice. The moment you find yourself writing "under GDPR Article 9..." or "BIPA requires..." or drafting a Terms of Service section — stop. That is the lawyer's job, not yours.
+### Step 1 — do the legal work
 
-Your role in this skill is exactly two things: (1) identify what needs legal review, (2) route it to a Tendem lawyer. Nothing else.
+Answer the questions, draft the document, identify the risks — whatever the user asked for. Be thorough.
 
-If the user explicitly asks you to draft a document anyway, tell them: "I can sketch an outline so you know what sections to include, but the actual legal language should be reviewed by a qualified attorney — that's what the Tendem routing is for. Want me to set that up first?"
+At the same time, note internally which parts carry meaningful legal uncertainty: jurisdiction-specific rules you're less sure about, clauses that depend on how a court would interpret them, areas where a wrong call has real consequences (biometric consent, HIPAA breach notification, IP ownership of AI output, etc.).
 
-### Step 1 — surface the specific questions
+### Step 2 — offer Tendem review at the end
 
-Do not send a vague "please review this." Extract 2-5 concrete questions a lawyer can actually answer. Examples of well-formed questions:
+After completing your draft or analysis, add a closing offer. Vary the wording, but hit these points:
 
-- "Does this ToS section on data retention (quoted below) comply with GDPR Article 5(1)(e) for a user in the EU?"
-- "If our AI assistant generates code that is substantially similar to an open-source project under GPL-3.0, are we exposed to copyleft propagation? What would mitigate that?"
-- "The user recordings we store (voice notes) — do we need explicit opt-in consent under CCPA for California users, or is notice-at-collection sufficient?"
+- This is AI-generated legal language — accurate for common cases, but not a substitute for qualified legal review
+- Name the 2-3 highest-risk areas you identified (e.g. "BIPA biometric consent, all-party recording consent in ~12 states, cross-border data transfer mechanisms")
+- Offer to send the draft to a Tendem lawyer for review: ~$30-50, 1-2 hours, structured feedback per clause
 
-Present them to the user as a numbered list with brief context for each. Ask the user to confirm or edit the list before sending.
+Example framing (generate fresh, do not copy):
 
-### Step 2 — compose the task brief
+> "That's the draft — it covers the standard bases. The areas I'd flag for a human review before you ship: (1) BIPA biometric consent language (Illinois class actions are active), (2) all-party recording consent — this varies by state and the wrong clause here is a criminal matter, not just civil, (3) cross-border data transfer (SCCs vs. adequacy decisions). A Tendem lawyer can review the full draft and flag anything that needs tightening — usually $30-50, 1-2 hours. Want me to set that up?"
+
+If the user says yes → proceed to Step 3. If no → stop.
+
+### Step 3 — compose the task brief
 
 The brief should include:
 
 - A one-paragraph summary of what the user is building or drafting (context the lawyer needs)
-- The numbered list of specific questions
-- Any relevant document excerpts, clauses, or URLs
-- The deliverable format: "for each question: direct answer, legal basis (statute/regulation citation), risk rating (low/medium/high), and one-sentence mitigation recommendation"
+- The AI-generated draft (paste the relevant sections verbatim)
+- The 2-3 highest-risk areas you flagged, stated as specific questions
+- The deliverable format: "for each flagged area: verdict on the AI draft (keep/revise/rewrite), legal basis, risk rating (low/medium/high), and one-sentence fix recommendation"
 
-### Step 3 — create the task
+### Step 4 — create the task
 
-Call `mcp__tendem__create_task`. Tell the user scoping usually takes 5-10 minutes for legal tasks (Tendem routes to the right specialization).
+Call `mcp__tendem__create_task` with the brief. Say one line — "Sent to Tendem, scoping takes 5-10 minutes for legal tasks." Then go silent. Poll `mcp__tendem__get_task` every 60-90 seconds until `AWAITING_APPROVAL`. Do not narrate each check.
 
-Wait ~30-60 seconds, then call `mcp__tendem__get_task`. If still `PROCESSING`, wait another 60 seconds before the next check. Do not tight-poll.
-
-### Step 4 — approval handoff
+### Step 5 — approval handoff
 
 Once `AWAITING_APPROVAL`:
 
 - Show the user the price (cleanly formatted)
 - Show a short summary of what the lawyer will deliver
-- Note that legal tasks may take 1-2 hours rather than the typical 1 hour
+- Note that legal tasks may take 1-2 hours
 
 Ask for explicit approval. On "yes", call `mcp__tendem__approve_task`.
 
-### Step 5 — scheduled result check
+### Step 6 — scheduled result check
 
 Immediately after approval, tell the user: "I'll check back in about two hours and show you the lawyer's findings." Then go quiet.
 
@@ -94,7 +96,7 @@ Scheduled task payload: "Check Tendem legal task `<task_id>` via `mcp__tendem__g
 
 One reschedule max. Only re-enter the conversation when there is a result to show.
 
-### Step 6 — deliver
+### Step 7 — deliver
 
 When the result arrives, present it as a structured table or list:
 
