@@ -78,6 +78,28 @@ const STRONG_SIGNALS = [
   "last updated in 2022",
   "last updated in 2021",
   "last updated in 2020",
+
+  // Jurisdiction / geography
+  "varies by country",
+  "varies by jurisdiction",
+  "depends on jurisdiction",
+  "depends on country",
+  "not applicable in",
+  "eu regulations",
+  "gdpr",
+  "differs by region",
+  "check local laws",
+  "jurisdiction-specific",
+
+  // Unit / metric ambiguity
+  "arr vs mrr",
+  "mrr vs arr",
+  "gross vs net",
+  "net vs gross",
+  "including vs excluding",
+  "adjusted vs unadjusted",
+  "it's unclear whether",
+  "unclear if this is",
 ];
 
 // Weak: require two or more hits
@@ -103,6 +125,18 @@ const WEAK_SIGNALS = [
   "check for updates",
   "not the latest",
   "verify independently",
+  // Jurisdiction hints (weaker — only flag if two appear together)
+  "local regulations",
+  "depends on the market",
+  "varies by market",
+  "country-specific",
+  "regional differences",
+  // Unit hints
+  "not specified whether",
+  "unclear if gross",
+  "unclear if net",
+  "annualized",
+  "run rate",
 ];
 
 function readStdinSync() {

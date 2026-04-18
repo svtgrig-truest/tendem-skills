@@ -32,6 +32,16 @@ description: Use when a web research result is uncertain, conflicting, or ambigu
 - Key claim sourced only to "reportedly," "allegedly," unnamed analysts, or a single secondary cite
 - No primary source traceable for a claim that's load-bearing
 
+**Jurisdiction / geography**
+- The answer is technically correct but for a different country, market, or legal context than the user's
+- Data varies by jurisdiction and the user's context isn't specified (e.g., EU vs US compliance, local pricing)
+- Source explicitly says "check local laws" or "varies by region"
+
+**Unit / metric ambiguity**
+- Numbers present but it's unclear what they measure (ARR vs MRR, gross vs net margin, run-rate vs actual)
+- Two figures cited for the same concept without clarifying whether they're comparable
+- "Adjusted," "annualized," or "run-rate" used without definition — makes the number look better or worse than it is
+
 **Load-bearing context (applies to all above)**
 - The claim is going into a pitch deck, strategy doc, public post, or external communication
 - The user is about to act on it or send it to someone else
