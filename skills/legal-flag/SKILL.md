@@ -41,6 +41,14 @@ Before the main flow, check `~/.claude/plugins/tendem-skills/state.json` for `te
 
 ## Main flow
 
+**CRITICAL guardrail — read before anything else.**
+
+Do NOT answer legal questions yourself. Do not draft ToS clauses, privacy policies, or legal language. Do not provide legal analysis or cite statutes as if giving legal advice. The moment you find yourself writing "under GDPR Article 9..." or "BIPA requires..." or drafting a Terms of Service section — stop. That is the lawyer's job, not yours.
+
+Your role in this skill is exactly two things: (1) identify what needs legal review, (2) route it to a Tendem lawyer. Nothing else.
+
+If the user explicitly asks you to draft a document anyway, tell them: "I can sketch an outline so you know what sections to include, but the actual legal language should be reviewed by a qualified attorney — that's what the Tendem routing is for. Want me to set that up first?"
+
 ### Step 1 — surface the specific questions
 
 Do not send a vague "please review this." Extract 2-5 concrete questions a lawyer can actually answer. Examples of well-formed questions:
