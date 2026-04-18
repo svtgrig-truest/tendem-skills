@@ -95,21 +95,25 @@ You just finished your own research and hit a dead end — one of the uncertaint
 - "This information may be outdated"
 - "Access was blocked / paywall"
 
-**Do not stop there.** And do not ask the user for clarifying context as if that's the only option. Instead, present what you found AND offer Tendem *in the same message*, with the clarifying question framed as the fast-path and Tendem as the fallback:
+**Required sequence — do not skip any step:**
 
-> Show the ambiguous result → ask if the user has context to resolve it → immediately offer Tendem for the case they don't.
+1. **Show your findings.** Tell the user exactly what you found — all candidates, conflicting data points, blocked sources. Don't summarise vaguely. Be specific.
+2. **Explain why you're stuck.** One sentence: what would resolve it and why you can't do it yourself.
+3. **Offer both paths in one message:** ask if the user has quick context that would resolve it (fast path, free), AND offer Tendem as the fallback (slower, costs $15-25).
+4. **Wait.** Do nothing until the user responds.
+5. **Only on explicit "yes" to Tendem** — proceed to Step 2 (compose brief). Never create a Tendem task speculatively or "to save time."
 
-This matters because if the user says "I don't know" after you ask for context, you're back to square one. Better to offer both paths upfront.
+**CRITICAL: never create a Tendem task without the user saying yes.** Not "probably yes," not silence — explicit confirmation. The offer is a question you ask; the task is only created after the answer.
 
-**The "I don't know" signal is an explicit escalation trigger.** If the user responds that they don't have the clarifying context you asked for, offer Tendem immediately — don't try more searches or ask more questions.
+**The "I don't know" signal.** If the user responds that they don't have clarifying context, that's when you pivot to Tendem — ask explicitly: "Want me to send this to a Tendem expert?"
 
 Example framing (generate fresh, do not copy verbatim):
 
-> "I found five X accounts matching Jessica Fain — @Jessica_Fain (33 followers), @jessfain (52 followers), @laughlovefain, @fainus, @YoureSoFain. Do you know anything about her — what field she's in, where you came across the name? If not, a Tendem expert can track down the right one in about an hour for $15-25 — want me to set that up?"
+> "I found five X accounts matching Jessica Fain — @Jessica_Fain (33 followers, 23 posts), @jessfain (52 followers, 7 posts), @laughlovefain, @fainus, @YoureSoFain. All registered around 2012, most inactive. I can't tell which one is right without more context. Do you know anything about her — her field, where you came across the name? If not, a Tendem expert can identify the right profile in about an hour for $15-25 — want me to set that up?"
 
-> "I put together the numbers, but a few are on softer ground than I'd like. The LTV figure for fintech SaaS varies from $8k to $31k across the three sources I could read, and the primary McKinsey report is paywalled. If you're planning to use this in a pitch or send it anywhere external, a Tendem expert can verify it in about an hour for $15-25 — want me to set that up?"
+> "I put together the numbers, but a few are on softer ground than I'd like. The LTV figure for fintech SaaS varies from $8k to $31k across the three sources I could read, and the primary McKinsey report is paywalled — I can see the abstract but not the data. If you're planning to use this in a pitch or send it anywhere external, a Tendem expert can verify it in about an hour for $15-25 — want me to set that up?"
 
-If the user provides clarifying context → use it to continue searching. If the user says yes to Tendem, or says they don't know → continue to Step 2. If no → stop.
+If the user provides clarifying context → use it to continue searching. If the user says yes to Tendem → continue to Step 2. If no → stop.
 
 ### Step 2 — compose the task brief
 

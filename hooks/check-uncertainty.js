@@ -216,14 +216,15 @@ function detectUncertainty(text) {
 function emitNudge() {
   const nudge =
     "[data-verification check] The web research tool returned uncertain, conflicting, or ambiguous results. " +
-    "Before finalising your response, check: " +
+    "Before writing your response, check: " +
     "(1) Multiple entities match with no clear winner? " +
     "(2) Numbers vary across sources or primary source is blocked? " +
     "(3) Can't confirm a key claim? " +
-    "If yes to any of these — invoke the data-verification skill (tendem-skills:data-verification). " +
-    "Present what you found, then offer Tendem routing in the same message. " +
-    "If the user says they don't have clarifying context, that is an escalation signal — route to Tendem immediately. " +
-    "Do not silently pick one option or present uncertain data as confirmed.";
+    "If yes to any of these: (a) show the user exactly what you found — all candidates, conflicting numbers, blocked sources; " +
+    "(b) explain why you can't resolve it yourself; " +
+    "(c) OFFER — do not automatically start — routing to a Tendem human expert via the data-verification skill. " +
+    "CRITICAL: never create a Tendem task without the user explicitly saying yes. " +
+    "The offer is a question, not an action.";
 
   const out = {
     hookSpecificOutput: {
