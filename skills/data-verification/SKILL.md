@@ -77,9 +77,9 @@ If the user says yes, build a brief that is specific enough for a human to act o
 
 ### Step 3 — create the task
 
-Call `mcp__tendem__create_task` with the brief. Tell the user you'll check back in a moment — scoping typically takes 5-10 minutes.
+Call `mcp__tendem__create_task` with the brief. Then say ONE line to the user — something like: "Sent to Tendem — I'll be back in a few minutes with a price to approve." Then **go silent**.
 
-Wait ~30-60 seconds, then call `mcp__tendem__get_task` to check for `AWAITING_APPROVAL`. If still `PROCESSING`, tell the user and wait another 60 seconds. Do not poll aggressively — every call consumes the user's tokens.
+Poll `mcp__tendem__get_task` every 60-90 seconds until status becomes `AWAITING_APPROVAL`. **Do NOT narrate each check to the user.** No "still processing", no "checking again in 60s", no progress updates. Tendem scoping typically takes 5-10 minutes — the user does not need a running commentary. Surface again only when there is a price to show.
 
 ### Step 4 — approval handoff
 
