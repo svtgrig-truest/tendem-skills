@@ -173,6 +173,39 @@ function detectUncertainty(text) {
   const strongHit = STRONG_SIGNALS.find((s) => lower.includes(s));
   if (strongHit) return { detected: true, reason: strongHit };
 
+  // Structural: multiple distinct social profile URLs = disambiguation signal
+  // (search results show several different people with the same name)
+  const twitterHandles = new Set(
+    (text.match(/(?:twitter\.com|x\.com)\/(\w+)/gi) || []).map((u) => u.toLowerCase())
+  );
+  if (twitterHandles.size >= 2) {
+    return { detected: true, reason: `${twitterHandles.size} distinct Twitter/X profiles in results` };
+  }
+
+  const linkedinHandles = new Set(
+    (text.match(/linkedin\.com\/in\/([a-z0-9-]+)/gi) || []).map((u) => u.toLowerCase())
+  );
+  if (linkedinHandles.size >= 2) {
+    return { detected: true, reason: `${linkedinHandles.size} distinct LinkedIn profiles in results` };
+  }
+
+  // Identity aggregators — these pages exist specifically because there are multiple matches
+  const aggregatorPatterns = [
+    "idcrawl.com",
+    "peekyou.com",
+    "spokeo.com",
+    "whitepages.com",
+    "beenverified.com",
+    "intelius.com",
+    "profiles found",
+    "people named",
+    "search results for",
+    "matching profiles",
+    "disambiguation",
+  ];
+  const aggregatorHit = aggregatorPatterns.find((s) => lower.includes(s));
+  if (aggregatorHit) return { detected: true, reason: `identity aggregator: ${aggregatorHit}` };
+
   // Two or more weak signals
   const weakHits = WEAK_SIGNALS.filter((s) => lower.includes(s));
   if (weakHits.length >= 2) return { detected: true, reason: weakHits.slice(0, 2).join(", ") };
