@@ -2,7 +2,9 @@
 
 Three Claude Code skills that route agent work to real human experts via [Tendem](https://tendem.ai) (a service from [Toloka.ai](https://toloka.ai), part of the Nebius group).
 
-The idea: your AI agent is already doing the research, drafting, and decision-making. When it hits a moment where a human in the loop would materially help — a number it can't verify, a legal clause it shouldn't guess at, a small kind thing worth doing — it should just be able to reach for one. These skills wire that in.
+The idea: your AI agent is already doing the research, drafting, and decision-making. When it hits a moment where a human in the loop would materially help — a number it can't verify, a legal clause it shouldn't guess at — it should just be able to reach for one. These skills wire that in.
+
+Plus one marketing-experiment idea along for the ride: a small kind thing your agent can do on your behalf — send a suspended coffee to someone on the supply side of AI.
 
 ## What's inside
 
