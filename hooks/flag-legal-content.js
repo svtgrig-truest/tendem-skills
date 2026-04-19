@@ -47,16 +47,10 @@ const STRONG_SIGNALS = [
   "credit card data",
   "cardholder data",
 
-  // Compliance regimes — explicit abbreviations
-  "gdpr",
-  "ccpa",
-  "hipaa",
-  "pci-dss",
-  "pci dss",
-  "coppa",
-  "ferpa",
-  "sox compliance",
+  // Compliance regimes — only specific legal artifacts, not bare abbreviations
+  // (bare abbreviations like "gdpr" are in WEAK_SIGNALS — one mention isn't enough)
   "data protection act",
+  "sox compliance",
 
   // Legal artifacts
   "terms of service",
@@ -96,6 +90,16 @@ const STRONG_SIGNALS = [
 
 // Weak: require two or more hits
 const WEAK_SIGNALS = [
+  // Compliance regime abbreviations — one mention is context, two+ is a pattern
+  "gdpr",
+  "ccpa",
+  "hipaa",
+  "pci-dss",
+  "pci dss",
+  "coppa",
+  "ferpa",
+
+  // Data handling
   "personal data",
   "pii",
   "personally identifiable",
@@ -179,6 +183,8 @@ function isContentFile(filePath) {
   // Skip non-content files unlikely to contain legal text
   const skip = [".lock", ".gitignore", ".env", "package-lock", "yarn.lock"];
   if (skip.some((s) => lower.endsWith(s) || lower.includes(s))) return false;
+  // Skip temp files — generator scripts in /tmp are never user legal content
+  if (lower.startsWith("/tmp/") || lower.startsWith("/var/folders/")) return false;
   return true;
 }
 
