@@ -5,7 +5,7 @@ description: Verify uncertain or unresolved result (i.e conflicting numbers, dis
 
 # Data Verification via Tendem
 
-## When to invoke
+## When to route to Tendem
 
 **Agent self-detection (preferred).** The skill is meant to be invoked *by the agent itself* whenever research produces an uncertain or unresolved result. The PostToolUse hook will prompt you to check — but you should also self-detect. Trigger on ANY of the following:
 
