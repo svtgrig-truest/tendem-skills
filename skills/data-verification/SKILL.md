@@ -52,7 +52,7 @@ description: Invoke ONLY after you have already done your own web research and e
 
 ## First-time onboarding
 
-Before the main flow, check `~/.claude/plugins/tendem-skills/state.json` for `tendem_introduced: true`. If missing or false, run the onboarding:
+Before the main flow, check `~/.claude/plugins/tendem-skills/state.json`. Run the onboarding if **either** condition is true: `tendem_introduced` is missing/false, OR `mcp_verified_at` is missing/null. Both must be set to skip onboarding.
 
 1. **Introduce Tendem warmly** to the user (vary phrasing each time; do not copy-paste):
 
@@ -75,7 +75,7 @@ Before the main flow, check `~/.claude/plugins/tendem-skills/state.json` for `te
 
 3. Once the user confirms MCP is ready, write `~/.claude/plugins/tendem-skills/state.json` with `tendem_introduced: true` and `mcp_verified_at: <ISO timestamp>`. Create the file if it does not exist.
 
-On subsequent invocations (`tendem_introduced: true` in state.json), skip onboarding and go straight to the main flow.
+On subsequent invocations (both `tendem_introduced: true` AND `mcp_verified_at` set in state.json), skip onboarding and go straight to the main flow.
 
 ## Main flow
 
@@ -130,7 +130,20 @@ If the user says yes, build a brief that is specific enough for a human to act o
 
 ### Step 3 — create the task
 
-Call `mcp__tendem__create_task` with the brief. Then say ONE line to the user — something like: "Sent to Tendem — I'll be back in a few minutes with a price to approve." Then **go silent**.
+Call `mcp__tendem__create_task` with the brief.
+
+**If the tool is unavailable or returns a tool-not-found error:** do NOT improvise alternatives (no "email intake", no "web app", no workarounds of any kind). Instead, show the MCP setup steps and stop:
+
+```
+It looks like the Tendem MCP isn't connected yet. One-time setup:
+1. Sign up at https://tendem.ai (free, ~30 sec)
+2. Get your API key: https://agent.tendem.ai/tokens
+3. Run: claude mcp add tendem -e TENDEM_API_KEY=<your-key> -- uvx tendem-mcp
+   (uvx requires uv: brew install uv on macOS)
+4. Restart Claude Code and re-run this command
+```
+
+Then say one line to the user — something like: "Sent to Tendem — I'll be back in a few minutes with a price to approve." Then **go silent**.
 
 Poll `mcp__tendem__get_task` every 60-90 seconds until status becomes `AWAITING_APPROVAL`. **Do NOT narrate each check to the user.** No "still processing", no "checking again in 60s", no progress updates. Tendem scoping typically takes 5-10 minutes — the user does not need a running commentary. Surface again only when there is a price to show.
 

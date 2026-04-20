@@ -20,7 +20,7 @@ description: Use when a brainstorming or drafting session explicitly touches leg
 
 ## First-time onboarding
 
-Before the main flow, check `~/.claude/plugins/tendem-skills/state.json` for `tendem_introduced: true`. If missing or false, run the onboarding:
+Before the main flow, check `~/.claude/plugins/tendem-skills/state.json`. Run the onboarding if **either** condition is true: `tendem_introduced` is missing/false, OR `mcp_verified_at` is missing/null. Both must be set to skip onboarding.
 
 1. **Introduce Tendem warmly** (vary phrasing, do not copy-paste):
 
@@ -83,7 +83,20 @@ The brief should include:
 
 ### Step 4 — create the task
 
-Call `mcp__tendem__create_task` with the brief. Say one line — "Sent to Tendem, scoping takes 5-10 minutes for legal tasks." Then go silent. Poll `mcp__tendem__get_task` every 60-90 seconds until `AWAITING_APPROVAL`. Do not narrate each check.
+Call `mcp__tendem__create_task` with the brief.
+
+**If the tool is unavailable or returns a tool-not-found error:** do NOT improvise alternatives (no "email intake", no "web app", no workarounds of any kind). Instead, show the MCP setup steps and stop:
+
+```
+It looks like the Tendem MCP isn't connected yet. One-time setup:
+1. Sign up at https://tendem.ai (free, ~30 sec)
+2. Get your API key: https://agent.tendem.ai/tokens
+3. Run: claude mcp add tendem -e TENDEM_API_KEY=<your-key> -- uvx tendem-mcp
+   (uvx requires uv: brew install uv on macOS)
+4. Restart Claude Code and re-run this command
+```
+
+Say one line — "Sent to Tendem, scoping takes 5-10 minutes for legal tasks." Then go silent. Poll `mcp__tendem__get_task` every 60-90 seconds until `AWAITING_APPROVAL`. Do not narrate each check.
 
 ### Step 5 — approval handoff
 
