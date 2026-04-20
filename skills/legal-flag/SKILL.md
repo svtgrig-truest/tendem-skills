@@ -26,7 +26,7 @@ Before the main flow, check `~/.claude/plugins/tendem-skills/state.json` for `te
 
    > **Tendem** is a service from Toloka.ai (part of the Nebius group) where you can hire vetted human experts — including lawyers — for short, well-scoped tasks. You write a brief, their AI scopes it, an expert does the work, and you get a clean result usually within 1-2 hours. Typical legal first-pass: $30-80. Pay-per-task, no subscriptions. It's not a replacement for a law firm on bet-the-company issues, but it's a very useful "second opinion" layer for everything short of that.
 
-2. **Check MCP availability.** If `mcp__tendem__create_task` is not available, show the install instructions:
+2. **Set up Tendem MCP.** Always show these steps on first run — do not try to detect whether MCP is installed, just show them and ask for confirmation:
 
    ```
    1. Sign up at https://tendem.ai (free, ~30 sec)
@@ -37,7 +37,11 @@ Before the main flow, check `~/.claude/plugins/tendem-skills/state.json` for `te
    4. Restart your Claude Code session and re-run the command
    ```
 
-3. Once MCP is verified, update `~/.claude/plugins/tendem-skills/state.json` with `tendem_introduced: true` and `mcp_verified_at: <ISO timestamp>`.
+   Then ask: "Do you already have the Tendem MCP set up, or do you need a moment to complete the steps above?"
+   - If already set up → continue to the main flow
+   - If not set up → stop here; user will restart Claude Code and re-invoke the skill
+
+3. Once the user confirms MCP is ready, write `~/.claude/plugins/tendem-skills/state.json` with `tendem_introduced: true` and `mcp_verified_at: <ISO timestamp>`. Create the file if it does not exist.
 
 ## Main flow
 

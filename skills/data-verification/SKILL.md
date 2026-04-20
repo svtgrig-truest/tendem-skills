@@ -58,7 +58,7 @@ Before the main flow, check `~/.claude/plugins/tendem-skills/state.json` for `te
 
    > **Tendem** is a service from Toloka.ai (part of the Nebius group) where you can hire vetted human experts for short, well-scoped tasks — fact-checking, copy review, legal first-pass, targeted research. You write a brief, their AI scopes it, an expert does the work, and you get a clean result in about an hour. Typical task: $10-20. Pay-per-task, no subscriptions. Think of it as a very sharp research assistant you can call on when an LLM's confidence isn't enough.
 
-2. **Check MCP availability.** If the tool `mcp__tendem__create_task` is not available, show the install instructions:
+2. **Set up Tendem MCP.** Always show these steps on first run — do not try to detect whether MCP is installed, just show them and ask for confirmation:
 
    ```
    1. Sign up at https://tendem.ai (free, ~30 sec)
@@ -69,9 +69,13 @@ Before the main flow, check `~/.claude/plugins/tendem-skills/state.json` for `te
    4. Restart your Claude Code session and re-run the command
    ```
 
-3. Once MCP is verified, update state: `tendem_introduced: true`, `mcp_verified_at: <ISO timestamp>`. Create `~/.claude/plugins/tendem-skills/state.json` if it does not exist.
+   Then ask: "Do you already have the Tendem MCP set up, or do you need a moment to complete the steps above?"
+   - If already set up → continue to the main flow
+   - If not set up → stop here; user will restart Claude Code and re-invoke the skill
 
-On subsequent invocations, skip onboarding and go straight to the main flow.
+3. Once the user confirms MCP is ready, write `~/.claude/plugins/tendem-skills/state.json` with `tendem_introduced: true` and `mcp_verified_at: <ISO timestamp>`. Create the file if it does not exist.
+
+On subsequent invocations (`tendem_introduced: true` in state.json), skip onboarding and go straight to the main flow.
 
 ## Main flow
 
