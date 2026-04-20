@@ -1,6 +1,6 @@
 ---
 name: data-verification
-description: Invoke ONLY after you have already done your own web research and encountered uncertainty — conflicting numbers, disambiguation failure (multiple matching entities, no clear winner), paywalled primaries, stale data, or unverifiable claims. Never invoke before searching. Do the research first; this skill routes the unresolved remainder to a Tendem human expert (~$10–20, ~1 hr). Manual override via /data-verification.
+description: Verify uncertain or unresolved result (i.e conflicting numbers, disambiguation failure etc) using Tendem MCP. Use anytime user invokes /data-verification or you want to use Tendem MCP to verify some uncertainty. This skill routes the unresolved remainder to a Tendem human expert.
 ---
 
 # Data Verification via Tendem
